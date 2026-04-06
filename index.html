@@ -1,195 +1,1327 @@
-
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Thorium234 Portfolio</title>
+    <title>Paul Inyangala | Software Developer Portfolio</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
-        /* Global Styles */
+        /* CSS Variables */
+        :root {
+            --primary: #6c63ff;
+            --primary-dark: #5a52d5;
+            --secondary: #f50057;
+            --bg-dark: #0f0f1a;
+            --bg-card: #1a1a2e;
+            --bg-card-hover: #22223a;
+            --text-primary: #ffffff;
+            --text-secondary: #b0b0c8;
+            --text-muted: #6c6c8a;
+            --border: #2a2a42;
+            --gradient-1: linear-gradient(135deg, #6c63ff 0%, #f50057 100%);
+            --gradient-2: linear-gradient(135deg, #0f0f1a 0%, #1a1a2e 100%);
+            --shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+            --radius: 12px;
+        }
+
+        /* Reset & Global */
+        *, *::before, *::after {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
         body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background-color: var(--bg-dark);
+            color: var(--text-primary);
+            line-height: 1.6;
+            overflow-x: hidden;
         }
-        
-        /* Header Styles */
-        header {
-            background-color: #333;
-            color: #fff;
-            padding: 1em;
-            text-align: center;
+
+        a {
+            color: var(--primary);
+            text-decoration: none;
+            transition: color 0.3s ease;
         }
-        
-        /* Navigation Styles */
-        nav ul {
-            list-style: none;
-            margin: 0;
-            padding: 0;
+
+        a:hover {
+            color: var(--secondary);
+        }
+
+        /* Navigation */
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            background: rgba(15, 15, 26, 0.9);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--border);
+            padding: 0 2rem;
+        }
+
+        .navbar .container {
+            max-width: 1200px;
+            margin: 0 auto;
             display: flex;
             justify-content: space-between;
+            align-items: center;
+            height: 70px;
         }
-        
-        nav li {
-            margin-right: 20px;
+
+        .navbar .logo {
+            font-size: 1.4rem;
+            font-weight: 800;
+            background: var(--gradient-1);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
         }
-        
-        nav a {
-            color: #fff;
-            text-decoration: none;
-        }
-        
-        /* Hero Section Styles */
-        #hero {
-            background-image: linear-gradient(to bottom, #333, #555);
-            padding: 100px;
-            text-align: center;
-            color: #fff;
-        }
-        
-        #hero h1 {
-            font-size: 48px;
-            margin-bottom: 10px;
-        }
-        
-        #hero p {
-            font-size: 24px;
-            margin-bottom: 20px;
-        }
-        
-        /* About Section Styles */
-        #about {
-            padding: 50px;
-            text-align: center;
-        }
-        
-        #about img {
-            width: 150px;
-            height: 150px;
-            border-radius: 50%;
-            margin-bottom: 20px;
-        }
-        
-        /* Skills Section Styles */
-        #skills {
-            padding: 50px;
-            text-align: center;
-        }
-        
-        #skills ul {
+
+        .navbar .nav-links {
+            display: flex;
             list-style: none;
-            margin: 0;
-            padding: 0;
+            gap: 2rem;
         }
-        
-        #skills li {
-            margin-bottom: 10px;
+
+        .navbar .nav-links a {
+            color: var(--text-secondary);
+            font-weight: 500;
+            font-size: 0.95rem;
+            transition: color 0.3s ease;
+            position: relative;
         }
-        
-        /* Projects Section Styles */
-        #projects {
-            padding: 50px;
-            text-align: center;
+
+        .navbar .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--gradient-1);
+            transition: width 0.3s ease;
         }
-        
-        #projects ul {
-            list-style: none;
-            margin: 0;
-            padding: 0;
+
+        .navbar .nav-links a:hover {
+            color: var(--text-primary);
         }
-        
-        #projects li {
-            margin-bottom: 10px;
-        }
-        
-        /* Contact Section Styles */
-        #contact {
-            padding: 50px;
-            text-align: center;
-        }
-        
-        #contact form {
-            margin-top: 20px;
-        }
-        
-        #contact input, #contact textarea {
+
+        .navbar .nav-links a:hover::after {
             width: 100%;
-            padding: 10px;
-            margin-bottom: 20px;
-            border: none;
-            border-radius: 5px;
-            box-shadow: 0 0 10px rgba(0,0,0,0.1);
         }
-        
-        #contact button[type="submit"] {
-            background-color: #333;
-            color: #fff;
-            padding: 10px 20px;
-            border: none;
-            border-radius: 5px;
+
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            gap: 5px;
             cursor: pointer;
+            background: none;
+            border: none;
+            padding: 5px;
         }
-        
-        #contact button[type="submit"]:hover {
-            background-color: #555;
+
+        .hamburger span {
+            display: block;
+            width: 25px;
+            height: 2px;
+            background: var(--text-primary);
+            transition: all 0.3s ease;
+        }
+
+        /* Hero Section */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 120px 2rem 80px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle at 30% 50%, rgba(108, 99, 255, 0.08) 0%, transparent 50%),
+                        radial-gradient(circle at 70% 50%, rgba(245, 0, 87, 0.06) 0%, transparent 50%);
+            animation: rotate 30s linear infinite;
+        }
+
+        @keyframes rotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 1;
+            max-width: 800px;
+        }
+
+        .hero-badge {
+            display: inline-block;
+            padding: 0.4rem 1.2rem;
+            border-radius: 50px;
+            border: 1px solid var(--border);
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            margin-bottom: 1.5rem;
+            background: rgba(108, 99, 255, 0.08);
+        }
+
+        .hero h1 {
+            font-size: clamp(2.5rem, 6vw, 4rem);
+            font-weight: 800;
+            line-height: 1.1;
+            margin-bottom: 1.5rem;
+        }
+
+        .hero h1 .highlight {
+            background: var(--gradient-1);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero .subtitle {
+            font-size: 1.15rem;
+            color: var(--text-secondary);
+            max-width: 600px;
+            margin: 0 auto 2.5rem;
+            line-height: 1.7;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.8rem 1.8rem;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 0.95rem;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            border: none;
+            font-family: inherit;
+        }
+
+        .btn-primary {
+            background: var(--gradient-1);
+            color: #fff;
+            box-shadow: 0 4px 20px rgba(108, 99, 255, 0.3);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 30px rgba(108, 99, 255, 0.5);
+            color: #fff;
+        }
+
+        .btn-outline {
+            background: transparent;
+            color: var(--text-primary);
+            border: 1px solid var(--border);
+        }
+
+        .btn-outline:hover {
+            background: var(--bg-card);
+            transform: translateY(-2px);
+            color: var(--text-primary);
+        }
+
+        /* Section Styles */
+        section {
+            padding: 100px 2rem;
+        }
+
+        .section-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+
+        .section-header h2 {
+            font-size: 2.2rem;
+            font-weight: 800;
+            margin-bottom: 1rem;
+        }
+
+        .section-header p {
+            color: var(--text-secondary);
+            max-width: 600px;
+            margin: 0 auto;
+            font-size: 1.05rem;
+        }
+
+        .section-label {
+            display: inline-block;
+            font-size: 0.8rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: var(--primary);
+            margin-bottom: 0.8rem;
+        }
+
+        /* About Section */
+        .about-grid {
+            display: grid;
+            grid-template-columns: 1fr 2fr;
+            gap: 4rem;
+            align-items: center;
+        }
+
+        .about-image-wrapper {
+            position: relative;
+        }
+
+        .about-image {
+            width: 100%;
+            max-width: 300px;
+            aspect-ratio: 1;
+            border-radius: var(--radius);
+            object-fit: cover;
+            border: 2px solid var(--border);
+            background: var(--bg-card);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 4rem;
+            margin: 0 auto;
+        }
+
+        .about-image-wrapper::after {
+            content: '';
+            position: absolute;
+            top: 10px;
+            left: calc(50% - 140px);
+            width: 100%;
+            max-width: 300px;
+            aspect-ratio: 1;
+            border-radius: var(--radius);
+            border: 2px solid var(--primary);
+            z-index: -1;
+            opacity: 0.3;
+        }
+
+        .about-content h3 {
+            font-size: 1.6rem;
+            margin-bottom: 1rem;
+        }
+
+        .about-content p {
+            color: var(--text-secondary);
+            margin-bottom: 1.5rem;
+            line-height: 1.8;
+        }
+
+        .about-info {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1rem;
+        }
+
+        .about-info-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .about-info-item .label {
+            color: var(--text-muted);
+            font-size: 0.85rem;
+        }
+
+        .about-info-item .value {
+            font-weight: 500;
+            font-size: 0.95rem;
+        }
+
+        /* Skills Section */
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .skill-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 2rem;
+            transition: all 0.3s ease;
+        }
+
+        .skill-card:hover {
+            background: var(--bg-card-hover);
+            transform: translateY(-4px);
+            box-shadow: var(--shadow);
+        }
+
+        .skill-card .icon {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+        }
+
+        .skill-card h3 {
+            font-size: 1.1rem;
+            margin-bottom: 0.8rem;
+        }
+
+        .skill-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+
+        .skill-tag {
+            display: inline-block;
+            padding: 0.3rem 0.8rem;
+            border-radius: 50px;
+            font-size: 0.8rem;
+            background: rgba(108, 99, 255, 0.1);
+            color: var(--primary);
+            border: 1px solid rgba(108, 99, 255, 0.2);
+        }
+
+        /* Projects Section */
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .project-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 2rem;
+            transition: all 0.3s ease;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .project-card:hover {
+            background: var(--bg-card-hover);
+            transform: translateY(-4px);
+            box-shadow: var(--shadow);
+            border-color: var(--primary);
+        }
+
+        .project-card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 1rem;
+        }
+
+        .project-card-header .folder-icon {
+            font-size: 2rem;
+        }
+
+        .project-card-header .links a {
+            color: var(--text-muted);
+            margin-left: 0.8rem;
+            font-size: 1.2rem;
+            transition: color 0.3s ease;
+        }
+
+        .project-card-header .links a:hover {
+            color: var(--primary);
+        }
+
+        .project-card h3 {
+            font-size: 1.2rem;
+            margin-bottom: 0.6rem;
+        }
+
+        .project-card h3 a {
+            color: var(--text-primary);
+        }
+
+        .project-card h3 a:hover {
+            color: var(--primary);
+        }
+
+        .project-card p {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            line-height: 1.7;
+            flex-grow: 1;
+            margin-bottom: 1.5rem;
+        }
+
+        .project-card-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .project-tech {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+
+        .project-tech span {
+            font-size: 0.78rem;
+            color: var(--text-muted);
+        }
+
+        .tech-dot {
+            display: inline-block;
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            margin-right: 4px;
+            vertical-align: middle;
+        }
+
+        .tech-dot.python { background: #3776ab; }
+        .tech-dot.java { background: #f89820; }
+        .tech-dot.javascript { background: #f7df1e; }
+        .tech-dot.typescript { background: #3178c6; }
+        .tech-dot.go { background: #00add8; }
+        .tech-dot.rust { background: #dea584; }
+        .tech-dot.php { background: #777bb4; }
+        .tech-dot.html { background: #e34f26; }
+        .tech-dot.csharp { background: #239120; }
+
+        .view-repo-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            padding: 0.4rem 1rem;
+            border-radius: 50px;
+            font-size: 0.8rem;
+            font-weight: 500;
+            color: var(--primary);
+            border: 1px solid rgba(108, 99, 255, 0.3);
+            transition: all 0.3s ease;
+        }
+
+        .view-repo-btn:hover {
+            background: rgba(108, 99, 255, 0.1);
+            color: var(--primary);
+        }
+
+        /* GitHub Stats */
+        .github-stats {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1.5rem;
+            margin-top: 3rem;
+        }
+
+        .stat-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 1.5rem;
+            text-align: center;
+        }
+
+        .stat-card .number {
+            font-size: 2rem;
+            font-weight: 800;
+            background: var(--gradient-1);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .stat-card .label {
+            color: var(--text-muted);
+            font-size: 0.85rem;
+            margin-top: 0.3rem;
+        }
+
+        /* Contact Section */
+        .contact-wrapper {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+        }
+
+        .contact-info h3 {
+            font-size: 1.4rem;
+            margin-bottom: 1rem;
+        }
+
+        .contact-info p {
+            color: var(--text-secondary);
+            margin-bottom: 2rem;
+            line-height: 1.7;
+        }
+
+        .contact-links {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .contact-link {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 1rem 1.5rem;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            color: var(--text-primary);
+            transition: all 0.3s ease;
+        }
+
+        .contact-link:hover {
+            background: var(--bg-card-hover);
+            border-color: var(--primary);
+            color: var(--text-primary);
+            transform: translateX(4px);
+        }
+
+        .contact-link .icon {
+            font-size: 1.3rem;
+        }
+
+        .contact-link .text {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .contact-link .text .link-label {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .contact-link .text .link-value {
+            font-weight: 500;
+        }
+
+        .contact-form {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 2rem;
+        }
+
+        .contact-form h3 {
+            font-size: 1.2rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group {
+            margin-bottom: 1.2rem;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 0.85rem;
+            font-weight: 500;
+            color: var(--text-secondary);
+            margin-bottom: 0.4rem;
+        }
+
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 0.8rem 1rem;
+            background: var(--bg-dark);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            color: var(--text-primary);
+            font-family: inherit;
+            font-size: 0.95rem;
+            transition: border-color 0.3s ease;
+            outline: none;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus {
+            border-color: var(--primary);
+        }
+
+        .form-group textarea {
+            resize: vertical;
+            min-height: 120px;
+        }
+
+        .submit-btn {
+            width: 100%;
+            padding: 0.9rem;
+            background: var(--gradient-1);
+            color: #fff;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: inherit;
+        }
+
+        .submit-btn:hover {
+            box-shadow: 0 4px 20px rgba(108, 99, 255, 0.4);
+            transform: translateY(-1px);
+        }
+
+        /* Footer */
+        footer {
+            border-top: 1px solid var(--border);
+            padding: 2rem;
+            text-align: center;
+        }
+
+        footer .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        footer p {
+            color: var(--text-muted);
+            font-size: 0.85rem;
+        }
+
+        .footer-links {
+            display: flex;
+            gap: 1.5rem;
+        }
+
+        .footer-links a {
+            color: var(--text-muted);
+            font-size: 0.85rem;
+        }
+
+        .footer-links a:hover {
+            color: var(--primary);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .navbar .nav-links {
+                display: none;
+                position: absolute;
+                top: 70px;
+                left: 0;
+                right: 0;
+                background: rgba(15, 15, 26, 0.98);
+                flex-direction: column;
+                padding: 1.5rem 2rem;
+                gap: 1.2rem;
+                border-bottom: 1px solid var(--border);
+            }
+
+            .navbar .nav-links.active {
+                display: flex;
+            }
+
+            .hamburger {
+                display: flex;
+            }
+
+            .hero {
+                padding: 100px 1.5rem 60px;
+            }
+
+            .hero h1 {
+                font-size: 2rem;
+            }
+
+            .about-grid {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+                text-align: center;
+            }
+
+            .about-info {
+                grid-template-columns: 1fr;
+            }
+
+            .projects-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .github-stats {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .contact-wrapper {
+                grid-template-columns: 1fr;
+            }
+
+            footer .container {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            section {
+                padding: 60px 1.5rem;
+            }
+        }
+
+        /* Animations */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.6s ease, transform 0.6s ease;
+        }
+
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
         }
     </style>
 </head>
 <body>
-    <header>
-        <nav>
-            <ul>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="container">
+            <a href="#" class="logo">Paul Inyangala</a>
+            <ul class="nav-links" id="navLinks">
                 <li><a href="#about">About</a></li>
                 <li><a href="#skills">Skills</a></li>
                 <li><a href="#projects">Projects</a></li>
                 <li><a href="#contact">Contact</a></li>
+                <li><a href="https://github.com/Thorium234" target="_blank" rel="noopener noreferrer">GitHub</a></li>
             </ul>
-        </nav>
-    </header>
-    <section id="hero">
-        <h1>Welcome to my portfolio!</h1>
-        <p>I'm Thorium234, a frontend developer with a passion for creating beautiful and functional websites.</p>
+            <button class="hamburger" id="hamburger" aria-label="Toggle navigation">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="hero-content">
+            <span class="hero-badge">Available for Opportunities</span>
+            <h1>Hi, I'm <span class="highlight">Paul Inyangala</span></h1>
+            <p class="subtitle">
+                Full-Stack Software Developer building robust web applications with
+                Python, Java, Go, TypeScript, Rust, and more. Passionate about clean architecture
+                and solving real-world problems through code.
+            </p>
+            <div class="hero-buttons">
+                <a href="#projects" class="btn btn-primary">View My Work</a>
+                <a href="https://github.com/Thorium234" target="_blank" rel="noopener noreferrer" class="btn btn-outline">GitHub Profile</a>
+            </div>
+        </div>
     </section>
+
+    <!-- About Section -->
     <section id="about">
-        <img src="photo.jpg" alt="Thorium234">
-        <p>Name: Thorium234</p>
-        <p>Phone: 0794012427</p>
-        <p>Email: inyangalapaul5@gmail.com</p>
-        <p>Github: Thorium234</p>
-        <p>Facebook: thorium script</p>
+        <div class="section-container">
+            <div class="section-header">
+                <span class="section-label">About Me</span>
+                <h2>Get to Know Me</h2>
+            </div>
+            <div class="about-grid fade-in">
+                <div class="about-image-wrapper">
+                    <div class="about-image">PI</div>
+                </div>
+                <div class="about-content">
+                    <h3>Full-Stack Developer &amp; Problem Solver</h3>
+                    <p>
+                        I'm a versatile software developer with hands-on experience across the full stack.
+                        From building responsive frontends with React and Next.js to designing scalable backends
+                        with Django, Spring Boot, Laravel, and Go, I enjoy working with diverse technologies
+                        to deliver impactful solutions. My projects span web applications, REST APIs,
+                        payment integrations, blockchain, and more.
+                    </p>
+                    <div class="about-info">
+                        <div class="about-info-item">
+                            <div>
+                                <div class="label">Name</div>
+                                <div class="value">Paul Inyangala</div>
+                            </div>
+                        </div>
+                        <div class="about-info-item">
+                            <div>
+                                <div class="label">Email</div>
+                                <div class="value">inyangalapaul5@gmail.com</div>
+                            </div>
+                        </div>
+                        <div class="about-info-item">
+                            <div>
+                                <div class="label">GitHub</div>
+                                <div class="value"><a href="https://github.com/Thorium234" target="_blank" rel="noopener noreferrer">Thorium234</a></div>
+                            </div>
+                        </div>
+                        <div class="about-info-item">
+                            <div>
+                                <div class="label">Location</div>
+                                <div class="value">Kenya</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </section>
+
+    <!-- Skills Section -->
     <section id="skills">
-        <h2>Skills</h2>
-        <ul>
-            <li>Frontend: HTML, CSS, JavaScript, Next.js</li>
-            <li>Backend: C, C++, Java, Python, PHP, Go</li>
-            <li>Frameworks: Springboot, Laravel, Django</li>
-            <li>API: Fast API, Rest API</li>
-        </ul>
+        <div class="section-container">
+            <div class="section-header">
+                <span class="section-label">My Expertise</span>
+                <h2>Skills &amp; Technologies</h2>
+                <p>A broad and growing toolkit spanning multiple languages, frameworks, and platforms.</p>
+            </div>
+            <div class="skills-grid">
+                <div class="skill-card fade-in">
+                    <div class="icon">&#127912;</div>
+                    <h3>Frontend Development</h3>
+                    <div class="skill-tags">
+                        <span class="skill-tag">HTML5</span>
+                        <span class="skill-tag">CSS3</span>
+                        <span class="skill-tag">JavaScript</span>
+                        <span class="skill-tag">TypeScript</span>
+                        <span class="skill-tag">React</span>
+                        <span class="skill-tag">Next.js</span>
+                    </div>
+                </div>
+                <div class="skill-card fade-in">
+                    <div class="icon">&#9881;&#65039;</div>
+                    <h3>Backend Development</h3>
+                    <div class="skill-tags">
+                        <span class="skill-tag">Python</span>
+                        <span class="skill-tag">Java</span>
+                        <span class="skill-tag">Go</span>
+                        <span class="skill-tag">PHP</span>
+                        <span class="skill-tag">Rust</span>
+                        <span class="skill-tag">C#</span>
+                    </div>
+                </div>
+                <div class="skill-card fade-in">
+                    <div class="icon">&#128640;</div>
+                    <h3>Frameworks &amp; Libraries</h3>
+                    <div class="skill-tags">
+                        <span class="skill-tag">Django</span>
+                        <span class="skill-tag">FastAPI</span>
+                        <span class="skill-tag">Spring Boot</span>
+                        <span class="skill-tag">Laravel</span>
+                        <span class="skill-tag">Avalonia</span>
+                    </div>
+                </div>
+                <div class="skill-card fade-in">
+                    <div class="icon">&#128736;&#65039;</div>
+                    <h3>Tools &amp; Platforms</h3>
+                    <div class="skill-tags">
+                        <span class="skill-tag">Git &amp; GitHub</span>
+                        <span class="skill-tag">REST APIs</span>
+                        <span class="skill-tag">Linux / Bash</span>
+                        <span class="skill-tag">Docker</span>
+                        <span class="skill-tag">CI/CD</span>
+                    </div>
+                </div>
+            </div>
+        </div>
     </section>
+
+    <!-- Projects Section -->
     <section id="projects">
-        <h2>Projects</h2>
-        <!-- Add your projects here -->
+        <div class="section-container">
+            <div class="section-header">
+                <span class="section-label">My Work</span>
+                <h2>Featured Projects</h2>
+                <p>A selection of projects showcasing my skills across different technologies and domains.</p>
+            </div>
+            <div class="projects-grid">
+                <!-- Project 1: Risk Manager -->
+                <div class="project-card fade-in">
+                    <div class="project-card-header">
+                        <span class="folder-icon">&#128193;</span>
+                        <div class="links">
+                            <a href="https://github.com/Thorium234/riskmanager" target="_blank" rel="noopener noreferrer" title="View on GitHub">&#128279;</a>
+                        </div>
+                    </div>
+                    <h3><a href="https://github.com/Thorium234/riskmanager" target="_blank" rel="noopener noreferrer">Risk Manager</a></h3>
+                    <p>A comprehensive risk management application built with TypeScript for assessing, tracking, and mitigating project risks.</p>
+                    <div class="project-card-footer">
+                        <div class="project-tech">
+                            <span><span class="tech-dot typescript"></span>TypeScript</span>
+                        </div>
+                        <a href="https://github.com/Thorium234/riskmanager" target="_blank" rel="noopener noreferrer" class="view-repo-btn">View Repo &rarr;</a>
+                    </div>
+                </div>
+
+                <!-- Project 2: Smart Rentals -->
+                <div class="project-card fade-in">
+                    <div class="project-card-header">
+                        <span class="folder-icon">&#128193;</span>
+                        <div class="links">
+                            <a href="https://github.com/Thorium234/smart-rentals-frontend-version1" target="_blank" rel="noopener noreferrer" title="Frontend">&#128279;</a>
+                            <a href="https://github.com/Thorium234/smart-rental-version1" target="_blank" rel="noopener noreferrer" title="Backend">&#128279;</a>
+                        </div>
+                    </div>
+                    <h3><a href="https://github.com/Thorium234/smart-rentals-frontend-version1" target="_blank" rel="noopener noreferrer">Smart Rentals</a></h3>
+                    <p>A full-stack rental management platform with a TypeScript/React frontend and a Go backend, featuring property listings and tenant management.</p>
+                    <div class="project-card-footer">
+                        <div class="project-tech">
+                            <span><span class="tech-dot typescript"></span>TypeScript</span>
+                            <span><span class="tech-dot go"></span>Go</span>
+                        </div>
+                        <a href="https://github.com/Thorium234/smart-rentals-frontend-version1" target="_blank" rel="noopener noreferrer" class="view-repo-btn">View Repo &rarr;</a>
+                    </div>
+                </div>
+
+                <!-- Project 3: Voting Blockchain -->
+                <div class="project-card fade-in">
+                    <div class="project-card-header">
+                        <span class="folder-icon">&#128193;</span>
+                        <div class="links">
+                            <a href="https://github.com/Thorium234/voting-blockchain" target="_blank" rel="noopener noreferrer" title="View on GitHub">&#128279;</a>
+                        </div>
+                    </div>
+                    <h3><a href="https://github.com/Thorium234/voting-blockchain" target="_blank" rel="noopener noreferrer">Voting Blockchain</a></h3>
+                    <p>A blockchain-based voting system built with Python, ensuring transparent, secure, and tamper-proof election processes.</p>
+                    <div class="project-card-footer">
+                        <div class="project-tech">
+                            <span><span class="tech-dot python"></span>Python</span>
+                        </div>
+                        <a href="https://github.com/Thorium234/voting-blockchain" target="_blank" rel="noopener noreferrer" class="view-repo-btn">View Repo &rarr;</a>
+                    </div>
+                </div>
+
+                <!-- Project 4: Supermarket Daraja API -->
+                <div class="project-card fade-in">
+                    <div class="project-card-header">
+                        <span class="folder-icon">&#128193;</span>
+                        <div class="links">
+                            <a href="https://github.com/Thorium234/supermarket-daraja-api" target="_blank" rel="noopener noreferrer" title="View on GitHub">&#128279;</a>
+                        </div>
+                    </div>
+                    <h3><a href="https://github.com/Thorium234/supermarket-daraja-api" target="_blank" rel="noopener noreferrer">Supermarket Daraja API</a></h3>
+                    <p>A supermarket management system integrated with M-Pesa Daraja API for seamless mobile payment processing in Kenya.</p>
+                    <div class="project-card-footer">
+                        <div class="project-tech">
+                            <span><span class="tech-dot python"></span>Python</span>
+                        </div>
+                        <a href="https://github.com/Thorium234/supermarket-daraja-api" target="_blank" rel="noopener noreferrer" class="view-repo-btn">View Repo &rarr;</a>
+                    </div>
+                </div>
+
+                <!-- Project 5: Pharmacy Management -->
+                <div class="project-card fade-in">
+                    <div class="project-card-header">
+                        <span class="folder-icon">&#128193;</span>
+                        <div class="links">
+                            <a href="https://github.com/Thorium234/Phamacy-management-spring-boot" target="_blank" rel="noopener noreferrer" title="View on GitHub">&#128279;</a>
+                        </div>
+                    </div>
+                    <h3><a href="https://github.com/Thorium234/Phamacy-management-spring-boot" target="_blank" rel="noopener noreferrer">Pharmacy Management System</a></h3>
+                    <p>A Spring Boot-based REST API for pharmacy management with built-in authorization and secure data handling.</p>
+                    <div class="project-card-footer">
+                        <div class="project-tech">
+                            <span><span class="tech-dot java"></span>Java / Spring Boot</span>
+                        </div>
+                        <a href="https://github.com/Thorium234/Phamacy-management-spring-boot" target="_blank" rel="noopener noreferrer" class="view-repo-btn">View Repo &rarr;</a>
+                    </div>
+                </div>
+
+                <!-- Project 6: Fraud Detector -->
+                <div class="project-card fade-in">
+                    <div class="project-card-header">
+                        <span class="folder-icon">&#128193;</span>
+                        <div class="links">
+                            <a href="https://github.com/Thorium234/buffalotool_fraudeDetector" target="_blank" rel="noopener noreferrer" title="View on GitHub">&#128279;</a>
+                        </div>
+                    </div>
+                    <h3><a href="https://github.com/Thorium234/buffalotool_fraudeDetector" target="_blank" rel="noopener noreferrer">Fraud Detector</a></h3>
+                    <p>A Python-based fraud detection tool leveraging data analysis techniques to identify and flag suspicious transactions.</p>
+                    <div class="project-card-footer">
+                        <div class="project-tech">
+                            <span><span class="tech-dot python"></span>Python</span>
+                        </div>
+                        <a href="https://github.com/Thorium234/buffalotool_fraudeDetector" target="_blank" rel="noopener noreferrer" class="view-repo-btn">View Repo &rarr;</a>
+                    </div>
+                </div>
+
+                <!-- Project 7: Exam Analysis -->
+                <div class="project-card fade-in">
+                    <div class="project-card-header">
+                        <span class="folder-icon">&#128193;</span>
+                        <div class="links">
+                            <a href="https://github.com/Thorium234/examAnalysis" target="_blank" rel="noopener noreferrer" title="View on GitHub">&#128279;</a>
+                        </div>
+                    </div>
+                    <h3><a href="https://github.com/Thorium234/examAnalysis" target="_blank" rel="noopener noreferrer">Exam Analysis System</a></h3>
+                    <p>A web-based examination analysis platform for schools, providing performance insights, grade computation, and report generation.</p>
+                    <div class="project-card-footer">
+                        <div class="project-tech">
+                            <span><span class="tech-dot html"></span>HTML / JavaScript</span>
+                        </div>
+                        <a href="https://github.com/Thorium234/examAnalysis" target="_blank" rel="noopener noreferrer" class="view-repo-btn">View Repo &rarr;</a>
+                    </div>
+                </div>
+
+                <!-- Project 8: School LMS -->
+                <div class="project-card fade-in">
+                    <div class="project-card-header">
+                        <span class="folder-icon">&#128193;</span>
+                        <div class="links">
+                            <a href="https://github.com/Thorium234/school_lms" target="_blank" rel="noopener noreferrer" title="View on GitHub">&#128279;</a>
+                        </div>
+                    </div>
+                    <h3><a href="https://github.com/Thorium234/school_lms" target="_blank" rel="noopener noreferrer">School Library Management System</a></h3>
+                    <p>A comprehensive library management system for schools, enabling cataloging, borrowing, and tracking of educational resources.</p>
+                    <div class="project-card-footer">
+                        <div class="project-tech">
+                            <span><span class="tech-dot javascript"></span>JavaScript</span>
+                        </div>
+                        <a href="https://github.com/Thorium234/school_lms" target="_blank" rel="noopener noreferrer" class="view-repo-btn">View Repo &rarr;</a>
+                    </div>
+                </div>
+
+                <!-- Project 9: Django Tournament Runner -->
+                <div class="project-card fade-in">
+                    <div class="project-card-header">
+                        <span class="folder-icon">&#128193;</span>
+                        <div class="links">
+                            <a href="https://github.com/Thorium234/kibaii_django-tournament-runner" target="_blank" rel="noopener noreferrer" title="View on GitHub">&#128279;</a>
+                        </div>
+                    </div>
+                    <h3><a href="https://github.com/Thorium234/kibaii_django-tournament-runner" target="_blank" rel="noopener noreferrer">Tournament Runner</a></h3>
+                    <p>A Django-powered tournament management application for organizing brackets, scheduling matches, and tracking results.</p>
+                    <div class="project-card-footer">
+                        <div class="project-tech">
+                            <span><span class="tech-dot python"></span>Python / Django</span>
+                        </div>
+                        <a href="https://github.com/Thorium234/kibaii_django-tournament-runner" target="_blank" rel="noopener noreferrer" class="view-repo-btn">View Repo &rarr;</a>
+                    </div>
+                </div>
+
+                <!-- Project 10: Rust CLI -->
+                <div class="project-card fade-in">
+                    <div class="project-card-header">
+                        <span class="folder-icon">&#128193;</span>
+                        <div class="links">
+                            <a href="https://github.com/Thorium234/rust_cli" target="_blank" rel="noopener noreferrer" title="View on GitHub">&#128279;</a>
+                        </div>
+                    </div>
+                    <h3><a href="https://github.com/Thorium234/rust_cli" target="_blank" rel="noopener noreferrer">Rust CLI Tool</a></h3>
+                    <p>A command-line interface tool built with Rust, showcasing systems programming skills and efficient binary development.</p>
+                    <div class="project-card-footer">
+                        <div class="project-tech">
+                            <span><span class="tech-dot rust"></span>Rust</span>
+                        </div>
+                        <a href="https://github.com/Thorium234/rust_cli" target="_blank" rel="noopener noreferrer" class="view-repo-btn">View Repo &rarr;</a>
+                    </div>
+                </div>
+
+                <!-- Project 11: Compiler -->
+                <div class="project-card fade-in">
+                    <div class="project-card-header">
+                        <span class="folder-icon">&#128193;</span>
+                        <div class="links">
+                            <a href="https://github.com/Thorium234/compiler" target="_blank" rel="noopener noreferrer" title="View on GitHub">&#128279;</a>
+                        </div>
+                    </div>
+                    <h3><a href="https://github.com/Thorium234/compiler" target="_blank" rel="noopener noreferrer">Compiler Project</a></h3>
+                    <p>An educational compiler implementation exploring lexing, parsing, and code generation fundamentals.</p>
+                    <div class="project-card-footer">
+                        <div class="project-tech">
+                            <span><span class="tech-dot html"></span>HTML / JavaScript</span>
+                        </div>
+                        <a href="https://github.com/Thorium234/compiler" target="_blank" rel="noopener noreferrer" class="view-repo-btn">View Repo &rarr;</a>
+                    </div>
+                </div>
+
+                <!-- Project 12: PHP Laravel -->
+                <div class="project-card fade-in">
+                    <div class="project-card-header">
+                        <span class="folder-icon">&#128193;</span>
+                        <div class="links">
+                            <a href="https://github.com/Thorium234/PhpLaravel" target="_blank" rel="noopener noreferrer" title="View on GitHub">&#128279;</a>
+                        </div>
+                    </div>
+                    <h3><a href="https://github.com/Thorium234/PhpLaravel" target="_blank" rel="noopener noreferrer">Laravel Web Application</a></h3>
+                    <p>A web application built with PHP Laravel, demonstrating MVC architecture, routing, and database management with Eloquent ORM.</p>
+                    <div class="project-card-footer">
+                        <div class="project-tech">
+                            <span><span class="tech-dot php"></span>PHP / Laravel</span>
+                        </div>
+                        <a href="https://github.com/Thorium234/PhpLaravel" target="_blank" rel="noopener noreferrer" class="view-repo-btn">View Repo &rarr;</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- GitHub Stats -->
+            <div class="github-stats fade-in">
+                <div class="stat-card">
+                    <div class="number">55+</div>
+                    <div class="label">Repositories</div>
+                </div>
+                <div class="stat-card">
+                    <div class="number">10+</div>
+                    <div class="label">Languages</div>
+                </div>
+                <div class="stat-card">
+                    <div class="number">5+</div>
+                    <div class="label">Frameworks</div>
+                </div>
+                <div class="stat-card">
+                    <div class="number">2+</div>
+                    <div class="label">Years Coding</div>
+                </div>
+            </div>
+        </div>
     </section>
+
+    <!-- Contact Section -->
     <section id="contact">
-        <h2>Contact</h2>
-        <form>
-            <input type="text" name="name" placeholder="Name">
-            <input type="email" name="email" placeholder="Email">
-            <textarea name="message" placeholder="Message"></textarea>
-            <button type="submit">Send</button>
-        </form>
+        <div class="section-container">
+            <div class="section-header">
+                <span class="section-label">Get In Touch</span>
+                <h2>Contact Me</h2>
+                <p>Have a project in mind or want to collaborate? I'd love to hear from you.</p>
+            </div>
+            <div class="contact-wrapper">
+                <div class="contact-info fade-in">
+                    <h3>Let's Build Something Together</h3>
+                    <p>
+                        I'm always open to discussing new projects, creative ideas, or opportunities
+                        to be part of something great. Feel free to reach out through any of the channels below.
+                    </p>
+                    <div class="contact-links">
+                        <a href="mailto:inyangalapaul5@gmail.com" class="contact-link">
+                            <span class="icon">&#9993;</span>
+                            <span class="text">
+                                <span class="link-label">Email</span>
+                                <span class="link-value">inyangalapaul5@gmail.com</span>
+                            </span>
+                        </a>
+                        <a href="https://github.com/Thorium234" target="_blank" rel="noopener noreferrer" class="contact-link">
+                            <span class="icon">&#128187;</span>
+                            <span class="text">
+                                <span class="link-label">GitHub</span>
+                                <span class="link-value">github.com/Thorium234</span>
+                            </span>
+                        </a>
+                        <a href="tel:0794012427" class="contact-link">
+                            <span class="icon">&#128222;</span>
+                            <span class="text">
+                                <span class="link-label">Phone</span>
+                                <span class="link-value">0794012427</span>
+                            </span>
+                        </a>
+                    </div>
+                </div>
+                <div class="contact-form fade-in">
+                    <h3>Send a Message</h3>
+                    <form>
+                        <div class="form-group">
+                            <label for="name">Your Name</label>
+                            <input type="text" id="name" name="name" placeholder="John Doe" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Your Email</label>
+                            <input type="email" id="email" name="email" placeholder="john@example.com" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="message">Message</label>
+                            <textarea id="message" name="message" placeholder="Tell me about your project..." required></textarea>
+                        </div>
+                        <button type="submit" class="submit-btn">Send Message</button>
+                    </form>
+                </div>
+            </div>
+        </div>
     </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <p>&copy; 2026 Paul Inyangala. All rights reserved.</p>
+            <div class="footer-links">
+                <a href="https://github.com/Thorium234" target="_blank" rel="noopener noreferrer">GitHub</a>
+                <a href="mailto:inyangalapaul5@gmail.com">Email</a>
+                <a href="#home">Back to Top</a>
+            </div>
+        </div>
+    </footer>
+
     <script>
-        // Add JavaScript code here to make your portfolio interactive
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function(e) {
-                e.preventDefault();
-                document.querySelector(this.getAttribute('href')).scrollIntoView({
-                    behavior: 'smooth'
-                });
+        // Mobile navigation toggle
+        const hamburger = document.getElementById('hamburger');
+        const navLinks = document.getElementById('navLinks');
+
+        hamburger.addEventListener('click', () => {
+            navLinks.classList.toggle('active');
+        });
+
+        // Close mobile nav on link click
+        navLinks.querySelectorAll('a').forEach(link => {
+            link.addEventListener('click', () => {
+                navLinks.classList.remove('active');
             });
+        });
+
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth' });
+                }
+            });
+        });
+
+        // Scroll-triggered fade-in animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+
+        // Navbar background on scroll
+        window.addEventListener('scroll', () => {
+            const navbar = document.querySelector('.navbar');
+            if (window.scrollY > 50) {
+                navbar.style.background = 'rgba(15, 15, 26, 0.98)';
+            } else {
+                navbar.style.background = 'rgba(15, 15, 26, 0.9)';
+            }
         });
     </script>
 </body>
